@@ -93,6 +93,8 @@ const Schedule: React.FC<{ selectedRamos: Ramo[] | [] }> = ({
     const serializedRamos = serializeRamos();
     if (serializedRamos) {
       setRamos(serializedRamos);
+    } else {
+      setRamos([]);
     }
   }, [selectedRamos]);
 
@@ -134,13 +136,14 @@ const Schedule: React.FC<{ selectedRamos: Ramo[] | [] }> = ({
             </div>
             {days.map((day) => (
               <Cell key={`${day}-${time}`}>
-                {filterRamos(ramos, day, time).map((ramo, index) => (
-                  <AssignatureCard
-                    key={index}
-                    title={ramo.title}
-                    tipoDeReunion={ramo.tipoDeReunion}
-                  />
-                ))}
+                {ramos &&
+                  filterRamos(ramos, day, time).map((ramo, index) => (
+                    <AssignatureCard
+                      key={index}
+                      title={ramo.title}
+                      tipoDeReunion={ramo.tipoDeReunion}
+                    />
+                  ))}
               </Cell>
             ))}
           </React.Fragment>

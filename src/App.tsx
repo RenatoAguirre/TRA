@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import Schedule from "./components/Schedule";
 import Search from "./components/Search";
@@ -10,6 +10,9 @@ import Ramo from "./interfaces/Ramo";
 function App(): JSX.Element {
   const { ramos } = useExcelReader();
   const [selectedRamos, setSelectedRamos] = useState<Ramo[]>([]);
+  const [possibleScheduleRegisters, setPossibleScheduleRegisters] = useState<
+    Ramo[]
+  >([]);
 
   const handleRamoSelect = (selectedRamo: Ramo) => {
     if (
@@ -20,7 +23,11 @@ function App(): JSX.Element {
     }
   };
   const handleSingleRamoDelete = (nrc: number) => {
-    setSelectedRamos(selectedRamos.filter((ramo) => ramo.nrc !== nrc));
+    if (selectedRamos.length === 1) {
+      setSelectedRamos([]);
+    } else {
+      setSelectedRamos(selectedRamos.filter((ramo) => ramo.nrc !== nrc));
+    }
   };
 
   const handleAllRamosDelete = () => {
@@ -32,23 +39,33 @@ function App(): JSX.Element {
     selectedRamos.some((selectedRamo) => selectedRamo.nrc === ramo.nrc)
   );
   */
+  useEffect(() => {
+    setPossibleScheduleRegisters(
+      schedulePosibleRegistersFromSelectedRamos(ramos, selectedRamos)
+    );
+  }, [selectedRamos]);
 
-  const schedulePosibleRegistersFromSelectedRamos = ramos.filter((ramo) => {
-    return selectedRamos.some((selectedRamo) => {
-      return (
-        selectedRamo.nrc === ramo.nrc &&
-        (ramo.tipoDeReunion === "CLAS" ||
-          ramo.tipoDeReunion === "LABT" ||
-          ramo.tipoDeReunion === "AYUD")
-      );
-    });
-  });
+  const schedulePosibleRegistersFromSelectedRamos = (
+    ramos: Ramo[],
+    selectedRamos: Ramo[]
+  ) => {
+    return ramos.filter((ramo) => {
+      return selectedRamos.some((selectedRamo) => {
+        return (
+          selectedRamo.nrc === ramo.nrc &&
+          (ramo.tipoDeReunion === "CLAS" ||
+            ramo.tipoDeReunion === "LABT" ||
+            ramo.tipoDeReunion === "AYUD")
+        );
+      });
+    }, selectedRamos);
+  };
   console.log("a", schedulePosibleRegistersFromSelectedRamos);
   return (
     <>
       <Search ramos={ramos} onRamoSelect={handleRamoSelect} />
       <div className="flex container mx-auto mt-5 justify-between items-stretch">
-        <Schedule selectedRamos={schedulePosibleRegistersFromSelectedRamos} />
+        <Schedule selectedRamos={possibleScheduleRegisters} />
         <RamoContainer
           ramos={selectedRamos}
           onAllRamoDelete={handleAllRamosDelete}

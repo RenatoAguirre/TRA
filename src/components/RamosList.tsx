@@ -10,19 +10,20 @@ const RamosList: React.FC = () => {
         <div className="mt-4">
           <h2 className="font-bold text-xl mb-2">Ramos Cargados:</h2>
           <ul className="list-disc pl-5">
-            {ramos.map((ramo, index) => (
-              <li key={index} className="mb-2">
-                <div className="p-2 border rounded bg-blue-100">
-                  <p>
-                    <strong>Título:</strong> {ramo.titulo}
-                  </p>
-                  <p>
-                    <strong>NRC:</strong> {ramo.nrc}
-                  </p>
-                  <p></p>
-                </div>
-              </li>
-            ))}
+            {ramos &&
+              ramos.map((ramo, index) => (
+                <li key={index} className="mb-2">
+                  <div className="p-2 border rounded bg-blue-100">
+                    <p>
+                      <strong>Título:</strong> {ramo.titulo}
+                    </p>
+                    <p>
+                      <strong>NRC:</strong> {ramo.nrc}
+                    </p>
+                    <p></p>
+                  </div>
+                </li>
+              ))}
           </ul>
         </div>
       ) : (
