@@ -43,7 +43,7 @@ function App(): JSX.Element {
       );
     });
   });
-
+  console.log("a", schedulePosibleRegistersFromSelectedRamos);
   return (
     <>
       <Search ramos={ramos} onRamoSelect={handleRamoSelect} />

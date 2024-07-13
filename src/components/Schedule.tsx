@@ -58,7 +58,7 @@ const Schedule: React.FC<{ selectedRamos: Ramo[] | [] }> = ({
     days.forEach((day) => {
       const value = ramo[day];
       if (value && value !== "") {
-        result.push({ key: day, value: value.substring(0, 5) as string });
+        result.push({ key: day, value: value as string });
       }
     });
 
@@ -100,10 +100,18 @@ const Schedule: React.FC<{ selectedRamos: Ramo[] | [] }> = ({
 
   const filterRamos = (ramos: RamoResumedData[], day: string, time: string) => {
     const filteredRamos = ramos.filter((ramo) => {
-      return ramo.day.toLowerCase() == day.toLowerCase() && ramo.hour == time;
+      const hourStart = ramo.hour.substring(0, 5);
+      const hourEnd = ramo.hour.substring(6);
+      return (
+        ramo.day.toLowerCase() == day.toLowerCase() &&
+        hourStart <= time &&
+        hourEnd > time
+      );
     });
+    console.log(filteredRamos);
     return filteredRamos;
   };
+
   return (
     <div className="overflow-x-auto">
       <div className="grid grid-cols-8 gap-0">
