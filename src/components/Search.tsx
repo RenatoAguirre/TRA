@@ -28,11 +28,11 @@ const Search: React.FC<SearchProps> = ({ ramos, onRamoSelect }) => {
   const [query, setQuery] = useState("");
 
   const filteredRamos = useMemo(() => {
-    const uniqueTitles = new Set<string>();
+    const uniqueNRCs = new Set<number>();
     return ramos.filter((ramo) => {
       const isMatch = ramo.titulo.toLowerCase().includes(query.toLowerCase());
-      if (isMatch && !uniqueTitles.has(ramo.titulo)) {
-        uniqueTitles.add(ramo.titulo);
+      if (isMatch && !uniqueNRCs.has(ramo.nrc)) {
+        uniqueNRCs.add(ramo.nrc);
         return true;
       }
       return false;
