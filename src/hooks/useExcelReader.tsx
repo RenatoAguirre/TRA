@@ -1,28 +1,10 @@
 // src/hooks/useExcelReader.tsx
 import { useState, useEffect } from "react";
 import * as XLSX from "xlsx";
-
-interface Register {
-  area: string;
-  planDeEstudio: string;
-  nrc: number;
-  materia: string;
-  seccion: number;
-  listaCruzada: string;
-  titulo: string;
-  lunes?: string;
-  martes?: string;
-  miercoles?: string;
-  jueves?: string;
-  viernes?: string;
-  inicio: Date;
-  fin: Date;
-  tipoDeReunion: string;
-  profesor: string;
-}
+import Ramo from "../interfaces/Ramo";
 
 const useExcelReader = () => {
-  const [ramos, setRamos] = useState<Register[]>([]);
+  const [ramos, setRamos] = useState<Ramo[]>([]);
 
   useEffect(() => {
     const fetchExcel = async () => {
@@ -31,11 +13,10 @@ const useExcelReader = () => {
       const workbook = XLSX.read(new Uint8Array(arrayBuffer), {
         type: "array",
       });
-
       const sheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[sheetName];
       console.log(sheet);
-      const data: Register[] = XLSX.utils.sheet_to_json(sheet, {
+      const data: Ramo[] = XLSX.utils.sheet_to_json(sheet, {
         header: 1,
         defval: "",
         raw: false, //importante para pasar las fechas formateadas
@@ -46,7 +27,6 @@ const useExcelReader = () => {
         console.log(row);
         // the slice(13) is to remove the first 13 rows of the excel file
         // console.log(row);
-        //console.log(new Date(row[13] * 31556926).toUTCString());
         return {
           area: row[0],
           planDeEstudio: row[1],

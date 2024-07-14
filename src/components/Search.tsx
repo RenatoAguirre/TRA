@@ -1,27 +1,9 @@
 import React, { useState, useMemo } from "react";
-
-interface Register {
-  area: string;
-  planDeEstudio: string;
-  nrc: number;
-  materia: string;
-  seccion: number;
-  listaCruzada: string;
-  titulo: string;
-  lunes?: string;
-  martes?: string;
-  miercoles?: string;
-  jueves?: string;
-  viernes?: string;
-  inicio: string;
-  fin: string;
-  tipoDeReunion: string;
-  profesor: string;
-}
+import Ramo from "../interfaces/Ramo";
 
 interface SearchProps {
-  ramos: Register[];
-  onRamoSelect: (ramo: Register) => void; // Función para manejar la selección de un ramo
+  ramos: Ramo[];
+  onRamoSelect: (ramo: Ramo) => void; // Función para manejar la selección de un ramo
 }
 
 const Search: React.FC<SearchProps> = ({ ramos, onRamoSelect }) => {
@@ -39,7 +21,7 @@ const Search: React.FC<SearchProps> = ({ ramos, onRamoSelect }) => {
     });
   }, [query, ramos]);
 
-  const handleClick = (ramo: Register) => {
+  const handleClick = (ramo: Ramo) => {
     onRamoSelect(ramo);
     setQuery("");
   };
