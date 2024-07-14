@@ -100,7 +100,7 @@ function App(): JSX.Element {
       </div>
       <div className="flex container justify-between space-x-5">
         <PruebaContainer pruebas={tests} title="Pruebas" />
-        <PruebaContainer pruebas={exams} title="Pruebas" />
+        <PruebaContainer pruebas={exams} title="Examenes" />
       </div>
     </>
   );
