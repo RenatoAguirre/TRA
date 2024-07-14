@@ -15,8 +15,8 @@ interface Register {
   miercoles?: string;
   jueves?: string;
   viernes?: string;
-  inicio: string;
-  fin: string;
+  inicio: Date;
+  fin: Date;
   tipoDeReunion: string;
   profesor: string;
 }
@@ -34,15 +34,19 @@ const useExcelReader = () => {
 
       const sheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[sheetName];
+      console.log(sheet);
       const data: Register[] = XLSX.utils.sheet_to_json(sheet, {
         header: 1,
         defval: "",
+        raw: false, //importante para pasar las fechas formateadas
       });
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const excelData = data.slice(13).map((row: any) => {
+        console.log(row);
         // the slice(13) is to remove the first 13 rows of the excel file
         // console.log(row);
+        //console.log(new Date(row[13] * 31556926).toUTCString());
         return {
           area: row[0],
           planDeEstudio: row[1],

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react/react-in-jsx-scope */
+import { useEffect, useState } from "react";
 import "./App.css";
 import Schedule from "./components/Schedule";
 import Search from "./components/Search";
@@ -6,9 +7,11 @@ import RamoContainer from "./components/AssignatureContainer";
 //import RamosList from "./components/RamosList";
 import useExcelReader from "./hooks/useExcelReader";
 import Ramo from "./interfaces/Ramo";
+import PruebaContainer from "./components/TestCointainer";
 
 function App(): JSX.Element {
   const { ramos } = useExcelReader();
+  //console.log(ramos);
   const [selectedRamos, setSelectedRamos] = useState<Ramo[]>([]);
   const [possibleScheduleRegisters, setPossibleScheduleRegisters] = useState<
     Ramo[]
@@ -39,6 +42,7 @@ function App(): JSX.Element {
     selectedRamos.some((selectedRamo) => selectedRamo.nrc === ramo.nrc)
   );
   */
+
   useEffect(() => {
     setPossibleScheduleRegisters(
       schedulePosibleRegistersFromSelectedRamos(ramos, selectedRamos)
@@ -60,7 +64,29 @@ function App(): JSX.Element {
       });
     }, selectedRamos);
   };
-  console.log("a", schedulePosibleRegistersFromSelectedRamos);
+  const testsFromSelectedRamos = (selectedRamos: Ramo[], ramos: Ramo[]) => {
+    return ramos.filter((ramo) => {
+      return selectedRamos.some((selectedRamo) => {
+        return (
+          selectedRamo.nrc === ramo.nrc && ramo.tipoDeReunion.startsWith("PRBA")
+        );
+      });
+    });
+  };
+  const examsFromSelectedRamos = (selectedRamos: Ramo[], ramos: Ramo[]) => {
+    return ramos.filter((ramo) => {
+      return selectedRamos.some((selectedRamo) => {
+        return (
+          selectedRamo.nrc === ramo.nrc && ramo.tipoDeReunion.startsWith("EXAM")
+        );
+      });
+    });
+  };
+  const tests = testsFromSelectedRamos(selectedRamos, ramos);
+
+  const exams = examsFromSelectedRamos(selectedRamos, ramos);
+
+  console.log(tests);
   return (
     <>
       <Search ramos={ramos} onRamoSelect={handleRamoSelect} />
@@ -71,6 +97,10 @@ function App(): JSX.Element {
           onAllRamoDelete={handleAllRamosDelete}
           onSingleRamoDelete={handleSingleRamoDelete}
         />
+      </div>
+      <div className="flex container justify-between space-x-5">
+        <PruebaContainer pruebas={tests} title="Pruebas" />
+        <PruebaContainer pruebas={exams} title="Pruebas" />
       </div>
     </>
   );

@@ -110,7 +110,7 @@ const Schedule: React.FC<{ selectedRamos: Ramo[] | [] }> = ({
         hourEnd > time
       );
     });
-    console.log(filteredRamos);
+    //console.log(filteredRamos);
     return filteredRamos;
   };
 
