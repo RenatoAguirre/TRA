@@ -8,14 +8,14 @@ const useExcelReader = () => {
 
   useEffect(() => {
     const fetchExcel = async () => {
-      const response = await fetch("/HORARIO+ING_202420.xlsx");
+      const response = await fetch("/TRA/HORARIO+ING_202420.xlsx");
       const arrayBuffer = await response.arrayBuffer();
       const workbook = XLSX.read(new Uint8Array(arrayBuffer), {
         type: "array",
       });
       const sheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[sheetName];
-      console.log(sheet);
+      //console.log(sheet);
       const data: Ramo[] = XLSX.utils.sheet_to_json(sheet, {
         header: 1,
         defval: "",
@@ -24,7 +24,7 @@ const useExcelReader = () => {
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const excelData = data.slice(13).map((row: any) => {
-        console.log(row);
+        //console.log(row);
         // the slice(13) is to remove the first 13 rows of the excel file
         // console.log(row);
         return {

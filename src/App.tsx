@@ -86,7 +86,7 @@ function App(): JSX.Element {
 
   const exams = examsFromSelectedRamos(selectedRamos, ramos);
 
-  console.log(tests);
+  //console.log(tests);
   return (
     <>
       <Search ramos={ramos} onRamoSelect={handleRamoSelect} />
