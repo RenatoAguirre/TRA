@@ -47,6 +47,7 @@ function App(): JSX.Element {
     setPossibleScheduleRegisters(
       schedulePosibleRegistersFromSelectedRamos(ramos, selectedRamos)
     );
+    console.log(selectedRamos);
   }, [selectedRamos]);
 
   const schedulePosibleRegistersFromSelectedRamos = (

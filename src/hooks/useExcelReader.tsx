@@ -8,7 +8,7 @@ const useExcelReader = () => {
 
   useEffect(() => {
     const fetchExcel = async () => {
-      const response = await fetch("/TRA/HORARIO+ING_202420.xlsx");
+      const response = await fetch("/TRA/HORARIO+ING_202510.xlsx");
       const arrayBuffer = await response.arrayBuffer();
       const workbook = XLSX.read(new Uint8Array(arrayBuffer), {
         type: "array",
@@ -31,19 +31,21 @@ const useExcelReader = () => {
           area: row[0],
           planDeEstudio: row[1],
           nrc: row[2],
-          materia: row[3],
-          seccion: row[4],
-          listaCruzada: row[5],
-          titulo: row[6],
-          lunes: row[7],
-          martes: row[8],
-          miercoles: row[9],
-          jueves: row[10],
-          viernes: row[11],
-          inicio: row[12],
-          fin: row[13],
-          tipoDeReunion: row[14],
-          profesor: row[15],
+          listaCruzada: row[3],
+          materia: row[4],
+          curso: row[5],
+          seccion: row[6],
+          titulo: row[7],
+          lunes: row[8],
+          martes: row[9],
+          miercoles: row[10],
+          jueves: row[11],
+          viernes: row[12],
+          inicio: row[13],
+          fin: row[14],
+          sala: row[15],
+          tipoDeReunion: row[16],
+          profesor: row[17],
         };
       });
 
