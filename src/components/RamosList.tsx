@@ -3,6 +3,9 @@ import useExcelReader from "../hooks/useExcelReader";
 
 const RamosList: React.FC = () => {
   const { ramos } = useExcelReader();
+  ramos.map((ramo) => {
+    console.log(ramo);
+  });
 
   return (
     <div className="p-4 h-full overflow-auto">
