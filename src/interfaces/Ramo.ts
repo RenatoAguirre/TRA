@@ -15,6 +15,7 @@ interface Ramo {
   fin: string;
   tipoDeReunion: string;
   profesor: string;
+  color: string;
 }
 
 export default Ramo;
