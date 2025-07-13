@@ -39,6 +39,7 @@ interface RamoResumedData {
   day: string;
   hour: string;
   tipoDeReunion?: string;
+  color: string;
 }
 
 const Schedule: React.FC<{ selectedRamos: Ramo[] | [] }> = ({
@@ -84,14 +85,17 @@ const Schedule: React.FC<{ selectedRamos: Ramo[] | [] }> = ({
         day: data[0].key,
         hour: data[0].value,
         tipoDeReunion: Ramo.tipoDeReunion,
+        color: Ramo.color,
       };
     });
+    console.log(SelectedRamosData);
     return SelectedRamosData;
   };
 
   React.useEffect(() => {
     const serializedRamos = serializeRamos();
     if (serializedRamos) {
+      console.log(serializedRamos);
       setRamos(serializedRamos);
     } else {
       setRamos([]);
@@ -102,15 +106,26 @@ const Schedule: React.FC<{ selectedRamos: Ramo[] | [] }> = ({
 
   const filterRamos = (ramos: RamoResumedData[], day: string, time: string) => {
     const filteredRamos = ramos.filter((ramo) => {
-      const hourStart = ramo.hour.substring(0, 5);
-      const hourEnd = ramo.hour.substring(6);
+      let [ hourStart, hourEnd ]= ramo.hour.split("-");
+      //console.log(hourStart, hourEnd);
+
+      // if (hourStart.endsWith("-")) {
+      //   hourStart = hourStart.substring(0, 4);
+      // }
+      if (hourStart.length < 5) {
+        hourStart = "0" + hourStart;
+      }
+      if (ramo.day.toLowerCase() == day.toLowerCase() && ramo.title.toLowerCase().startsWith("al")) {
+        console.log(ramo.day, day, hourStart, hourEnd, time, ramo.day.toLowerCase() == day.toLowerCase() && hourStart <= time && hourEnd > time);
+      }
+      //console.log(ramo.day.toLowerCase() == day.toLowerCase() && hourStart <= time && hourEnd > time);
       return (
         ramo.day.toLowerCase() == day.toLowerCase() &&
         hourStart <= time &&
         hourEnd > time
       );
     });
-    //console.log(filteredRamos);
+    //console.log("filteredRamos", filteredRamos);
     return filteredRamos;
   };
 
@@ -142,6 +157,7 @@ const Schedule: React.FC<{ selectedRamos: Ramo[] | [] }> = ({
                       key={index}
                       title={ramo.title}
                       tipoDeReunion={ramo.tipoDeReunion}
+                      color={ramo.color}
                     />
                   ))}
               </Cell>
