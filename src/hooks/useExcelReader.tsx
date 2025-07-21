@@ -31,7 +31,7 @@ const useExcelReader = () => {
 
   useEffect(() => {
     const fetchExcel = async () => {
-      const response = await fetch("/TRA/Horario_ING_202520.xlsx");
+      const response = await fetch("/TRA/Horario-ING_202520-1.xlsx");
       const arrayBuffer = await response.arrayBuffer();
       const workbook = XLSX.read(new Uint8Array(arrayBuffer), {
         type: "array",
@@ -54,21 +54,22 @@ const useExcelReader = () => {
           area: row[0],
           planDeEstudio: row[1],
           nrc: row[2],
-          listaCruzada: row[3],
-          materia: row[4],
-          curso: row[5],
-          seccion: row[6],
-          titulo: row[7],
-          lunes: row[8],
-          martes: row[9],
-          miercoles: row[10],
-          jueves: row[11],
-          viernes: row[12],
-          inicio: row[13],
-          fin: row[14],
-          sala: row[15],
-          tipoDeReunion: row[16],
-          profesor: row[17],
+          conectorLiga: row[3],
+          listaCruzada: row[4],
+          materia: row[5],
+          curso: row[6],
+          seccion: row[7],
+          titulo: row[8],
+          lunes: row[9],
+          martes: row[10],
+          miercoles: row[11],
+          jueves: row[12],
+          viernes: row[13],
+          inicio: row[14],
+          fin: row[15],
+          sala: row[16],
+          tipoDeReunion: row[17],
+          profesor: row[18],
           color: getRandomColor(),
         };
       });
