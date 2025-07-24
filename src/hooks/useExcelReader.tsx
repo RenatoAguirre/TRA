@@ -31,7 +31,7 @@ const useExcelReader = () => {
 
   useEffect(() => {
     const fetchExcel = async () => {
-      const response = await fetch("/TRA/Horario-ING_202520-1.xlsx");
+      const response = await fetch("/TRA/Horario20252test.xlsx");
       const arrayBuffer = await response.arrayBuffer();
       const workbook = XLSX.read(new Uint8Array(arrayBuffer), {
         type: "array",
